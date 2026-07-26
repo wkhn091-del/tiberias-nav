@@ -1,0 +1,41 @@
+flowchart TB
+
+    subgraph APP["React Native app — Expo dev build"]
+        LOC["expo-location watcher<br/>GPS fix every 1-2 s while moving"]
+        WSC["WebSocket client<br/>with offline queue"]
+        MAPV["MapLibre React Native<br/>vector tiles + route layer + user puck"]
+        BADGE["ON-ROUTE / OFF-ROUTE badge<br/>+ distance from Route 90"]
+    end
+
+    subgraph BE["Node.js backend — Express + ws"]
+        REST["Express REST<br/>GET /routes/hwy90-tiberias"]
+        WSS["WebSocket endpoint /track"]
+        VAL["validate + sanity filter<br/>drop teleports and speed spikes"]
+        ORE["on-route engine<br/>point-to-line distance under 30 m"]
+    end
+
+    subgraph DB["MongoDB — 2dsphere indexes"]
+        ROUTES["routes collection<br/>hwy90-tiberias LineString + 30 m buffer polygon"]
+        PINGS["location_pings collection<br/>GeoJSON Point + onRoute flag + TTL"]
+    end
+
+    subgraph PIPE["Python geo pipeline — offline, run once"]
+        OSM["OSM Overpass extract<br/>highway ref 90, clipped to Tiberias bbox"]
+        CLEAN["GeoPandas + Shapely<br/>merge ways into one LineString<br/>build 30 m buffer polygon"]
+        SEED["pymongo seed script"]
+        OSM --> CLEAN --> SEED
+    end
+
+    SEED --> ROUTES
+    ROUTES -->|"loaded + cached at server boot"| ORE
+    ROUTES --> REST
+    REST -->|"route GeoJSON to draw"| MAPV
+
+    LOC -->|"1. lon, lat, speed, heading, ts"| WSC
+    WSC -->|"2. push over wss"| WSS
+    WSS -->|"3. raw ping"| VAL
+    VAL --> ORE
+    ORE -->|"4. insert ping with onRoute flag"| PINGS
+    ORE -->|"5. status + distance back"| WSS
+    WSS -->|"6. live feedback"| WSC
+    WSC --> BADGE

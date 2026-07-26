@@ -1,0 +1,4 @@
+requests>=2.31
+shapely>=2.0
+pyproj>=3.5
+pymongo>=4.6

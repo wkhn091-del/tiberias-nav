@@ -1,0 +1,42 @@
+{
+  "expo": {
+    "name": "Tiberias Nav",
+    "slug": "tiberias-nav",
+    "version": "0.1.0",
+    "orientation": "portrait",
+    "scheme": "tiberiasnav",
+    "userInterfaceStyle": "automatic",
+    "newArchEnabled": true,
+    "android": {
+      "package": "com.tiberiasnav.app",
+      "permissions": [
+        "ACCESS_FINE_LOCATION",
+        "ACCESS_COARSE_LOCATION"
+      ]
+    },
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.tiberiasnav.app",
+      "infoPlist": {
+        "NSLocationWhenInUseUsageDescription": "Tiberias Nav uses your location to show your position along Route 90 and provide on-route feedback."
+      }
+    },
+    "plugins": [
+      "expo-router",
+      "@maplibre/maplibre-react-native",
+      [
+        "expo-location",
+        {
+          "locationWhenInUsePermission": "Tiberias Nav uses your location to show your position along Route 90 and provide on-route feedback."
+        }
+      ],
+      [
+        "./plugins/withWindowsLongPathFix",
+        {
+          "cmakeVersion": "3.31.6",
+          "shortBuildRoot": "C:\\b"
+        }
+      ]
+    ]
+  }
+}
