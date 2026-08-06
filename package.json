@@ -1,0 +1,28 @@
+{
+  "name": "tiberias-nav-server",
+  "version": "0.1.0",
+  "description": "Route 90 Tiberias PoC - telemetry feed + on-route engine",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "private": true,
+  "dependencies": {
+    "@turf/turf": "^7.3.5",
+    "express": "^5.2.1",
+    "mongoose": "^9.7.4",
+    "ws": "^8.21.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.14"
+  },
+  "engines": {
+    "node": ">=20.19.4"
+  },
+  "//": "NOT an Expo app. `eas build` run from this directory creates/uses an EAS project named after THIS package (tiberias-nav-server), then fails with \"the module `expo` is not installed\" — which is exactly what happened on build 945c13d2. The mobile app lives in ../mobile_app; build from there."
+}

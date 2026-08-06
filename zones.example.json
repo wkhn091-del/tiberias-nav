@@ -1,0 +1,48 @@
+{
+  "type": "FeatureCollection",
+  "_readme": [
+    "Avoidance zones. Copy to zones.json (gitignored) or point AVOID_ZONES_FILE at it.",
+    "",
+    "SHIPS EMPTY ON PURPOSE. A routing exclusion is a claim that a driver should",
+    "not be sent somewhere, so every zone must cite why. `reason` is required and",
+    "`legal-restriction` additionally requires `authority` — the order or statute",
+    "that makes entry unlawful. Zones failing validation are rejected at boot with",
+    "a log line, not silently dropped.",
+    "",
+    "reason:",
+    "  legal-restriction  entry prohibited by law or military order. In Israel the",
+    "                     usual case is Area A of the West Bank, which Israeli",
+    "                     citizens may not enter; boundaries are published and",
+    "                     signposted, which is what makes them mappable.",
+    "  closed-road        physically or temporarily impassable.",
+    "  hazard             an official advisory: flood, fire, landslide.",
+    "  user               drawn by the driver.",
+    "",
+    "Source polygons from an official designation, not from demographics. The",
+    "authority field is what keeps this dataset auditable a year from now."
+  ],
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "example-closed-road",
+        "name": "Example: closed road works",
+        "reason": "closed-road",
+        "source": "https://example.gov.il/roadworks/12345",
+        "validUntil": "2026-12-31"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [35.52, 32.78],
+            [35.53, 32.78],
+            [35.53, 32.79],
+            [35.52, 32.79],
+            [35.52, 32.78]
+          ]
+        ]
+      }
+    }
+  ]
+}
